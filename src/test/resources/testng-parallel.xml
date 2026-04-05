@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Practice Software Testing Suite - Parallel Execution" parallel="methods" thread-count="3" verbose="2">
+    <parameter name="browser" value="chrome"/>
+    <test name="Search Tests - Parallel">
+        <classes>
+            <class name="com.automation.tests.SearchTest">
+                <methods>
+                    <include name="testSearchHammerAndVerifyProductTitle"/>
+                    <include name="testAddToCartButtonIsVisible"/>
+                    <include name="testVerifyProductPrice"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!--
+SAFE PARALLEL CONFIGURATION
+Use this for stable parallel execution with 2 threads
+Ideal for: Development machines with limited resources
+Performance: ~30 seconds for 3 tests (modest speedup)
+Resource Usage: Low (2 concurrent browser instances)
+Reliability: High (less prone to race conditions)
+-->
+<suite name="Practice Software Testing Suite - Safe Parallel" parallel="methods" thread-count="2" verbose="2">
+    <parameter name="browser" value="chrome"/>
+    <test name="Search Tests - Safe Parallel">
+        <classes>
+            <class name="com.automation.tests.SearchTest">
+                <methods>
+                    <include name="testSearchHammerAndVerifyProductTitle"/>
+                    <include name="testAddToCartButtonIsVisible"/>
+                    <include name="testVerifyProductPrice"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
+
