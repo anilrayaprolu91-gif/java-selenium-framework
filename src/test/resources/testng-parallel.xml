@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Practice Software Testing Suite - Parallel Execution" parallel="methods" thread-count="3" verbose="2">
+<!--
+AGGRESSIVE PARALLEL CONFIGURATION
+This configuration runs multiple test methods in parallel for maximum speed.
+Use this for CI/CD pipelines with powerful machines.
+
+Parallelization Strategy: parallel="methods"
+- Each test method runs in a separate thread
+- thread-count="4" - 4 concurrent browser instances
+- Best for: Production CI/CD servers, high-spec machines
+
+Performance Profile:
+- Estimated time for 3 tests: ~25 seconds (if each takes ~20 seconds)
+- Resource usage: High (4 concurrent browsers)
+- Machine requirement: 8GB+ RAM, quad-core CPU minimum
+- Stability: Moderate (potential race conditions if tests share state)
+
+Tips for Success:
+1. Ensure tests are truly independent (no shared state between tests)
+2. Each thread-count spawns a separate WebDriver instance
+3. Use thread-local variables for thread-safe storage
+4. Monitor resource usage on your CI/CD machine
+5. If tests fail, try reducing thread-count or use safe-parallel.xml instead
+-->
+<suite name="Practice Software Testing Suite - Aggressive Parallel" parallel="methods" thread-count="4" verbose="2">
     <parameter name="browser" value="chrome"/>
 
     <!-- Listeners for reporting -->
@@ -8,7 +31,7 @@
         <listener class-name="com.automation.listeners.ExtentReportsListener"/>
     </listeners>
 
-    <test name="Search Tests - Parallel">
+    <test name="Search Tests - Parallel Methods">
         <classes>
             <class name="com.automation.tests.SearchTest">
                 <methods>

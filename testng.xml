@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Practice Software Testing Suite" parallel="false" verbose="2">
+<!--
+DEFAULT TEST SUITE - SERIAL EXECUTION
+This is the default test suite configuration that runs tests sequentially.
+Tests run one after another, ensuring complete isolation and stability.
+
+Running Tests:
+- mvn test                           # Run this default suite (serial execution)
+- mvn test -Dsuite=testng-parallel   # Run with aggressive parallel (4 threads)
+- mvn test -Dsuite=testng-parallel-safe.xml  # Run with safe parallel (2 threads)
+- mvn test -Dsuite=testng-parallel-fast.xml  # Run with fast parallel (6 threads)
+- mvn test -Dsuite=testng-serial.xml         # Explicitly run serial (same as mvn test)
+
+For CI/CD Pipelines:
+- GitHub Actions: mvn test -Dsuite=testng-parallel-fast.xml
+- Jenkins: mvn test -Dsuite=testng-parallel-safe.xml
+- Local Development: mvn test (uses this serial configuration)
+
+Parameters:
+- parallel="false": Tests run sequentially
+- verbose="2": Detailed TestNG console output
+- browser="chrome": Default browser (can be overridden via parameter)
+
+Best Practices:
+1. Start with serial execution (this file) during development
+2. Use safe-parallel.xml on most CI/CD pipelines
+3. Use fast-parallel.xml only on high-spec CI/CD machines
+4. Always validate with serial execution if parallel tests fail
+-->
+<suite name="Practice Software Testing Suite - Default Serial" parallel="false" verbose="2">
     <parameter name="browser" value="chrome"/>
 
     <!-- Listeners for reporting -->
@@ -8,16 +36,31 @@
         <listener class-name="com.automation.listeners.ExtentReportsListener"/>
     </listeners>
 
-    <test name="Search Tests" preserve-order="true">
+    <test name="All Tests - Serial Execution">
         <classes>
-            <class name="com.automation.tests.SearchTest">
-                <methods>
-                    <include name="testSearchHammerAndVerifyProductTitle"/>
-                    <include name="testAddToCartButtonIsVisible"/>
-                    <include name="testVerifyProductPrice"/>
-                </methods>
-            </class>
+            <!-- Search Tests -->
+            <class name="com.automation.tests.SearchTest"/>
+
+            <!-- Product Tests -->
+            <class name="com.automation.tests.ProductTests"/>
+
+            <!-- Cart Tests -->
+            <class name="com.automation.tests.CartTests"/>
+
+            <!-- Checkout Tests -->
+            <class name="com.automation.tests.CheckoutTests"/>
+
+            <!-- Regression Tests -->
+            <class name="com.automation.tests.RegressionTests"/>
+
+            <!-- Boundary Tests -->
+            <class name="com.automation.tests.BoundaryTests"/>
+
+            <!-- Login Tests -->
+            <class name="com.automation.tests.LoginTests"/>
+
+            <!-- Data-Driven Tests -->
+            <class name="com.automation.tests.DataDrivenTests"/>
         </classes>
     </test>
 </suite>
-

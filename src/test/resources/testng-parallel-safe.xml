@@ -1,12 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <!--
-SAFE PARALLEL CONFIGURATION
-Use this for stable parallel execution with 2 threads
-Ideal for: Development machines with limited resources
-Performance: ~30 seconds for 3 tests (modest speedup)
-Resource Usage: Low (2 concurrent browser instances)
-Reliability: High (less prone to race conditions)
+SAFE PARALLEL CONFIGURATION - RECOMMENDED FOR MOST USERS
+This configuration runs multiple test methods in parallel with conservative settings.
+Use this for development machines and stable parallel execution.
+
+Parallelization Strategy: parallel="methods"
+- Each test method runs in a separate thread
+- thread-count="2" - 2 concurrent browser instances
+- Best for: Development machines, CI/CD with moderate specs
+
+Performance Profile:
+- Estimated time for 3 tests: ~35 seconds (if each takes ~20 seconds)
+- Resource usage: Moderate (2 concurrent browsers)
+- Machine requirement: 4GB+ RAM, dual-core CPU
+- Stability: High (very stable, minimal race conditions)
+
+Tips for Success:
+1. This is the safest option for most users
+2. Good balance between speed and stability
+3. Works well on standard development machines
+4. If tests still fail due to timing issues, use serial-execution.xml
+5. Great for local development and testing
+
+When to use:
+- Local development and testing
+- CI/CD pipelines with moderate resources
+- When you want a good speedup without stress
 -->
 <suite name="Practice Software Testing Suite - Safe Parallel" parallel="methods" thread-count="2" verbose="2">
     <parameter name="browser" value="chrome"/>
