@@ -50,6 +50,12 @@ public class ProductPage {
     private WebElement addToFavoritesButton;
 
     /**
+     * Quantity input field - for setting product quantity before adding to cart
+     */
+    @FindBy(css = "[data-test='quantity-input']")
+    private WebElement quantityInput;
+
+    /**
      * Constructor to initialize PageFactory
      *
      * @param driver WebDriver instance
@@ -149,6 +155,21 @@ public class ProductPage {
     }
 
     /**
+     * Set the product quantity
+     *
+     * @param quantity The quantity to set
+     */
+    public void setQuantity(int quantity) {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(quantityInput));
+            quantityInput.clear();
+            quantityInput.sendKeys(String.valueOf(quantity));
+        } catch (Exception e) {
+            // Quantity field might not exist for some products
+        }
+    }
+
+    /**
      * Check if the product title is displayed
      *
      * @return True if title is displayed, false otherwise
@@ -234,5 +255,29 @@ public class ProductPage {
         String actualTitle = getProductTitle();
         return actualTitle.equals(expectedTitle);
     }
-}
 
+    /**
+     * Check if out-of-stock indicator is visible
+     */
+    public boolean isOutOfStockIndicatorVisible() {
+        try {
+            WebElement outOfStockIndicator = driver.findElement(org.openqa.selenium.By.cssSelector("[class*='out-of-stock']"));
+            wait.until(ExpectedConditions.visibilityOf(outOfStockIndicator));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if add to cart button is clickable
+     */
+    public boolean isAddToCartButtonClickable() {
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(addToCartButton));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+}

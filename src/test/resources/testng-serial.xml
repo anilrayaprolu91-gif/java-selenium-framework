@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<!--
+SERIAL EXECUTION CONFIGURATION - DEBUGGING & TROUBLESHOOTING
+This configuration runs tests sequentially one after another (no parallelization).
+Use this for debugging test issues, reliability validation, and CI/CD stability.
+
+Parallelization Strategy: parallel="false" (or omitted, default is false)
+- Tests run one after another
+- Only ONE browser instance at any time
+- Best for: Debugging, stability validation, CI/CD baseline
+
+Performance Profile:
+- Estimated time for 3 tests: ~70 seconds (if each takes ~20 seconds)
+- Resource usage: Minimal (only 1 concurrent browser)
+- Machine requirement: Any machine with 2GB+ RAM
+- Stability: Maximum (tests are completely isolated)
+
+Tips for Success:
+1. Best for initial test debugging and development
+2. Use when parallel tests are failing to isolate issues
+3. Establishes a stable baseline for your test suite
+4. Guaranteed no cross-test interference
+5. Good for smoke testing before parallel runs
+
+When to use:
+- Initial test development and debugging
+- Troubleshooting test failures
+- Validating test reliability
+- When parallel execution is causing issues
+- Baseline validation before parallel runs
+- Resource-constrained environments
+-->
+<suite name="Practice Software Testing Suite - Serial Execution" parallel="false" verbose="2">
+    <parameter name="browser" value="chrome"/>
+
+    <!-- Listeners for reporting -->
+    <listeners>
+        <listener class-name="com.automation.listeners.ExtentReportsListener"/>
+    </listeners>
+
+    <test name="Search Tests - Serial">
+        <classes>
+            <class name="com.automation.tests.SearchTest">
+                <methods>
+                    <include name="testSearchHammerAndVerifyProductTitle"/>
+                    <include name="testAddToCartButtonIsVisible"/>
+                    <include name="testVerifyProductPrice"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
+

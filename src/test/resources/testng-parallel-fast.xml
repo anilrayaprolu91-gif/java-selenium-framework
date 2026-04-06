@@ -2,12 +2,33 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <!--
 FAST PARALLEL CONFIGURATION
-Use this for maximum parallelization with 5 threads
-Ideal for: CI/CD pipelines with sufficient resources
-Performance: ~10-15 seconds for 3 tests
-Resource Usage: High (5 concurrent browser instances)
+This configuration is optimized for speed on CI/CD machines with good resources.
+
+Parallelization Strategy: parallel="methods"
+- Each test method runs in a separate thread
+- thread-count="6" - 6 concurrent browser instances
+- Best for: High-spec CI/CD servers, cloud runners
+
+Performance Profile:
+- Estimated time for 3 tests: ~20 seconds
+- Resource usage: Very High (6 concurrent browsers)
+- Machine requirement: 16GB+ RAM, 8-core CPU
+- Stability: Good with high-spec hardware
+
+Tips for Success:
+1. Only use on CI/CD machines with strong specs
+2. Monitor pipeline resource usage
+3. If pipeline machine runs out of memory, reduce thread-count
+4. Best for quick feedback in CI/CD pipelines
+5. Not recommended for local development
+
+Use Cases:
+- High-speed CI/CD pipelines (GitHub Actions, Jenkins, GitLab CI)
+- Cloud-based test execution platforms
+- Nightly full test suite runs
+- When you need results ASAP on powerful hardware
 -->
-<suite name="Practice Software Testing Suite - Fast Parallel" parallel="methods" thread-count="5" verbose="2">
+<suite name="Practice Software Testing Suite - Fast Parallel" parallel="methods" thread-count="6" verbose="2">
     <parameter name="browser" value="chrome"/>
 
     <!-- Listeners for reporting -->
@@ -27,4 +48,3 @@ Resource Usage: High (5 concurrent browser instances)
         </classes>
     </test>
 </suite>
-

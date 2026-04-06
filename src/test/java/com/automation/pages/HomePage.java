@@ -1,5 +1,6 @@
 package com.automation.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,6 +58,48 @@ public class HomePage {
     private WebElement chatToggle;
 
     /**
+     * Sign in/Login link
+     */
+    @FindBy(linkText = "Sign in")
+    private WebElement signInLink;
+
+    /**
+     * Sign out/Logout link
+     */
+    @FindBy(linkText = "Sign out")
+    private WebElement signOutLink;
+
+    /**
+     * Cart icon
+     */
+    @FindBy(css = "[data-test='nav-cart']")
+    private WebElement cartIcon;
+
+    /**
+     * Products link in navigation
+     */
+    @FindBy(linkText = "Products")
+    private WebElement productsLink;
+
+    /**
+     * Orders link in navigation
+     */
+    @FindBy(linkText = "Orders")
+    private WebElement ordersLink;
+
+    /**
+     * Logo
+     */
+    @FindBy(css = "[data-test='logo']")
+    private WebElement logo;
+
+    /**
+     * Navigation menu
+     */
+    @FindBy(css = "nav")
+    private WebElement navigationMenu;
+
+    /**
      * Constructor to initialize PageFactory
      *
      * @param driver WebDriver instance
@@ -86,17 +129,7 @@ public class HomePage {
         searchButton.click();
     }
 
-    /**
-     * Search for a product - enters query and clicks search button
-     *
-     * @param searchQuery The search term to search for
-     */
-    public void searchProduct(String searchQuery) {
-        enterSearchQuery(searchQuery);
-        clickSearchButton();
-    }
-
-    /**
+     /**
      * Click the reset button to clear search filters
      */
     public void clickResetButton() {
@@ -233,5 +266,147 @@ public class HomePage {
         languageSelect.click();
         // Note: Implementation depends on dropdown structure
     }
-}
 
+    /**
+     * Navigate to home page
+     */
+    public void navigateTo() {
+        driver.get("https://practicesoftwaretesting.com/");
+    }
+
+    /**
+     * Click on sign in link
+     */
+    public LoginPage clickLoginLink() {
+        wait.until(ExpectedConditions.elementToBeClickable(signInLink));
+        signInLink.click();
+        return new LoginPage(driver);
+    }
+
+    /**
+     * Click on sign out link
+     */
+    public LoginPage clickLogoutLink() {
+        wait.until(ExpectedConditions.elementToBeClickable(signOutLink));
+        signOutLink.click();
+        return new LoginPage(driver);
+    }
+
+    /**
+     * Check if logout link is visible (user is logged in)
+     */
+    public boolean isLogoutLinkVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(signOutLink));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Click on cart icon and return CartPage
+     */
+    public CartPage clickCartIcon() {
+        wait.until(ExpectedConditions.elementToBeClickable(cartIcon));
+        cartIcon.click();
+        return new CartPage(driver);
+    }
+
+    /**
+     * Get cart item count from header badge
+     */
+     public int getCartItemCount() {
+         try {
+             WebElement cartBadge = driver.findElement(By.cssSelector("[data-test='cart-count']"));
+             String countText = cartBadge.getText();
+             return Integer.parseInt(countText);
+         } catch (Exception e) {
+             return 0;
+         }
+     }
+
+     /**
+      * Check if success notification is displayed
+      */
+     public boolean isSuccessNotificationDisplayed() {
+         try {
+             WebElement notification = driver.findElement(By.cssSelector("[class*='success'], [class*='alert-success']"));
+             wait.until(ExpectedConditions.visibilityOf(notification));
+             return true;
+         } catch (Exception e) {
+             return false;
+         }
+     }
+
+    /**
+     * Click on Products link
+     */
+    public ProductsPage clickProductsLink() {
+        wait.until(ExpectedConditions.elementToBeClickable(productsLink));
+        productsLink.click();
+        return new ProductsPage(driver);
+    }
+
+    /**
+     * Click on Orders link
+     */
+    public OrdersPage clickOrdersLink() {
+        wait.until(ExpectedConditions.elementToBeClickable(ordersLink));
+        ordersLink.click();
+        return new OrdersPage(driver);
+    }
+
+    /**
+     * Click on logo
+     */
+    public HomePage clickLogoLink() {
+        wait.until(ExpectedConditions.elementToBeClickable(logo));
+        logo.click();
+        return this;
+    }
+
+    /**
+     * Check if logo is visible
+     */
+    public boolean isLogoVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(logo));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if navigation menu is visible
+     */
+    public boolean isNavigationMenuVisible() {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(navigationMenu));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if page is loaded
+     */
+    public boolean isPageLoaded() {
+        try {
+            return isSearchInputVisible() && isNavigationMenuVisible();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Search for product and return SearchResultsPage
+     */
+    public SearchResultsPage searchProduct(String searchTerm) {
+        enterSearchQuery(searchTerm);
+        clickSearchButton();
+        return new SearchResultsPage(driver);
+    }
+}
