@@ -14,7 +14,6 @@ import java.io.File;
  * OrderDetailsPage - Page Object for Order Details
  */
 public class OrderDetailsPage {
-
     private WebDriver driver;
     private WebDriverWait wait;
     private static final int TIMEOUT = 10;
