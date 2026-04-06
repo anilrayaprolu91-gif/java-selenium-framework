@@ -9,6 +9,12 @@ Resource Usage: High (5 concurrent browser instances)
 -->
 <suite name="Practice Software Testing Suite - Fast Parallel" parallel="methods" thread-count="5" verbose="2">
     <parameter name="browser" value="chrome"/>
+
+    <!-- Listeners for reporting -->
+    <listeners>
+        <listener class-name="com.automation.listeners.ExtentReportsListener"/>
+    </listeners>
+
     <test name="Search Tests - Fast Parallel">
         <classes>
             <class name="com.automation.tests.SearchTest">

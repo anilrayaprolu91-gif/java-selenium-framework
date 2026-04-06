@@ -10,6 +10,12 @@ Reliability: High (less prone to race conditions)
 -->
 <suite name="Practice Software Testing Suite - Safe Parallel" parallel="methods" thread-count="2" verbose="2">
     <parameter name="browser" value="chrome"/>
+
+    <!-- Listeners for reporting -->
+    <listeners>
+        <listener class-name="com.automation.listeners.ExtentReportsListener"/>
+    </listeners>
+
     <test name="Search Tests - Safe Parallel">
         <classes>
             <class name="com.automation.tests.SearchTest">
