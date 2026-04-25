@@ -402,7 +402,7 @@ Click "Run Test" above test method
 
 ---
 
-## 🎯 Recruitment Value Proposition
+## 🎯 Project Value Proposition
 
 ### This Project Shows
 
